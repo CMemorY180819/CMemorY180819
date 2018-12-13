@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh_Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/CMemorY180819/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/CMemorY180819/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/CMemorY180819/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/CMemorY180819/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/CMemorY180819/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java连接SAP,SAP,JAVA,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本篇博客主要是描述通过JAVA建立到SAP的连接。">
+<meta name="keywords" content="Java连接SAP,SAP,JAVA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)">
+<meta property="og:url" content="https://cmemory180819.github.io/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/index.html">
+<meta property="og:site_name" content="Hikari的小站">
+<meta property="og:description" content="本篇博客主要是描述通过JAVA建立到SAP的连接。">
+<meta property="og:locale" content="zh_Hans">
+<meta property="og:updated_time" content="2018-12-12T14:38:13.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)">
+<meta name="twitter:description" content="本篇博客主要是描述通过JAVA建立到SAP的连接。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/CMemorY180819/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://cmemory180819.github.io/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/">
+
+
+
+
+
+  <title>(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置) | Hikari的小站</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh_Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/CMemorY180819/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hikari的小站</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">学海无涯</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/CMemorY180819/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/CMemorY180819/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/CMemorY180819/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/CMemorY180819/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cmemory180819.github.io/CMemorY180819/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Hikari">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/CMemorY180819/uploads/image/avatar/ot.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hikari的小站">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-12T17:53:41+08:00">
+                2018-12-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/CMemorY180819/categories/SAP/" itemprop="url" rel="index">
+                    <span itemprop="name">SAP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+          
+          
+             <span id="/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/" class="leancloud_visitors" data-flag-title="(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Words count in article&#58;</span>
+                
+                <span title="Words count in article">
+                  1,302 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  7 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <meta name="referrer" content="no-referrer">
+
+<p>本篇博客主要是描述通过JAVA建立到SAP的连接。</p>
+<a id="more"></a>
+<h1 id="一-通过JAVA连接SAP-sapjco3-jar在Windows和MacOS上的配置"><a href="#一-通过JAVA连接SAP-sapjco3-jar在Windows和MacOS上的配置" class="headerlink" title="(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)"></a>(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)</h1><h2 id="一、sapjoc3-jar获取"><a href="#一、sapjoc3-jar获取" class="headerlink" title="一、sapjoc3.jar获取"></a>一、sapjoc3.jar获取</h2><p>由于sap官网提供的链接需要合作公司提供账号密码，如果商用请索要正确的用户名密码下载，如果只是想做测试使用，可以使用我这里提供的链接，资源失效请及时提醒我，谢谢<br><a href="https://pan.baidu.com/s/1U2GQMGQ36IL2_2AKwgGe2Q" target="_blank" rel="noopener">点击这里下载windows版</a> 密码:1u0t<br><a href="https://pan.baidu.com/s/1TkeHWSeg2fnW2HipjS4bWw" target="_blank" rel="noopener">点击这里下载linux版</a> 密码:7zuv<br><a href="https://pan.baidu.com/s/1RbidbHEVwQl-IlfwObBWFQ" target="_blank" rel="noopener">点击这里下载macOS版</a> 密码:lafl</p>
+<h2 id="二、测试项目环境准备"><a href="#二、测试项目环境准备" class="headerlink" title="二、测试项目环境准备"></a>二、测试项目环境准备</h2><ol>
+<li><p>新建项目<br> 这个就不多谈了，直接上图，我这里新建了一个空的测试项目，新建lib文件夹，准备把需要用到的jar包丢进来</p>
+</li>
+<li><p>windows和macOS环境配置</p>
+<ol>
+<li>windows<br> 直接把 sapjco3.jar sapjco3.dll sapjco3.pdb 拷贝至lib下，然后add library把他们都添加进去</li>
+<li>macOS<br> 把 sapjco3.jar 和 libsapjco3.jnilib 拷贝至lib下，同样add libray添加进去，这里只需要add sapjco3.jar 即可。</li>
+</ol>
+</li>
+</ol>
+<p>WARNING: 这里很多博客讲到需要添加classpath在变量里面，这是参照了官方提供的安装方式，这里的话我们只需要将上述文件拷贝至lib文件夹下即可。</p>
+<h2 id="三、源码编写及测试"><a href="#三、源码编写及测试" class="headerlink" title="三、源码编写及测试"></a>三、源码编写及测试</h2><pre><code>首先编写用来放置sap连接信息的SapConn实体类
+</code></pre><p>SapConn</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by gang.xu01@hand-china.com on 2018/12/6</span><br><span class="line"> */</span><br><span class="line">public class SapConn &#123;</span><br><span class="line"></span><br><span class="line">    // SAP服务器</span><br><span class="line">    private String JCO_ASHOST;</span><br><span class="line">    // SAP系统编号</span><br><span class="line">    private String JCO_SYSNR;</span><br><span class="line">    // SAP集团</span><br><span class="line">    private String JCO_CLIENT;</span><br><span class="line">    // SAP用户名</span><br><span class="line">    private String JCO_USER;</span><br><span class="line">    // SAP密码</span><br><span class="line">    private String JCO_PASSWD;</span><br><span class="line">    // SAP登录语言</span><br><span class="line">    private String JCO_LANG;</span><br><span class="line">    // 最大连接数</span><br><span class="line">    private String JCO_POOL_CAPACITY;</span><br><span class="line">    // 最大连接线程</span><br><span class="line">    private String JCO_PEAK_LIMIT;</span><br><span class="line">    // SAP ROUTER</span><br><span class="line">    private String JCO_SAPROUTER;</span><br><span class="line"></span><br><span class="line">    public SapConn(String JCO_ASHOST, String JCO_SYSNR, String JCO_CLIENT, String JCO_USER,</span><br><span class="line">                   String JCO_PASSWD, String JCO_LANG, String JCO_POOL_CAPACITY, String JCO_PEAK_LIMIT,</span><br><span class="line">                   String JCO_SAPROUTER) &#123;</span><br><span class="line">        this.JCO_ASHOST = JCO_ASHOST;</span><br><span class="line">        this.JCO_SYSNR = JCO_SYSNR;</span><br><span class="line">        this.JCO_CLIENT = JCO_CLIENT;</span><br><span class="line">        this.JCO_USER = JCO_USER;</span><br><span class="line">        this.JCO_PASSWD = JCO_PASSWD;</span><br><span class="line">        this.JCO_LANG = JCO_LANG;</span><br><span class="line">        this.JCO_POOL_CAPACITY = JCO_POOL_CAPACITY;</span><br><span class="line">        this.JCO_PEAK_LIMIT = JCO_PEAK_LIMIT;</span><br><span class="line">        this.JCO_SAPROUTER = JCO_SAPROUTER;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public SapConn() &#123;&#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_ASHOST() &#123;</span><br><span class="line">        return JCO_ASHOST;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_ASHOST(String JCO_ASHOST) &#123;</span><br><span class="line">        this.JCO_ASHOST = JCO_ASHOST;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_SYSNR() &#123;</span><br><span class="line">        return JCO_SYSNR;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_SYSNR(String JCO_SYSNR) &#123;</span><br><span class="line">        this.JCO_SYSNR = JCO_SYSNR;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_CLIENT() &#123;</span><br><span class="line">        return JCO_CLIENT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_CLIENT(String JCO_CLIENT) &#123;</span><br><span class="line">        this.JCO_CLIENT = JCO_CLIENT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_USER() &#123;</span><br><span class="line">        return JCO_USER;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_USER(String JCO_USER) &#123;</span><br><span class="line">        this.JCO_USER = JCO_USER;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_PASSWD() &#123;</span><br><span class="line">        return JCO_PASSWD;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_PASSWD(String JCO_PASSWD) &#123;</span><br><span class="line">        this.JCO_PASSWD = JCO_PASSWD;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_LANG() &#123;</span><br><span class="line">        return JCO_LANG;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_LANG(String JCO_LANG) &#123;</span><br><span class="line">        this.JCO_LANG = JCO_LANG;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_POOL_CAPACITY() &#123;</span><br><span class="line">        return JCO_POOL_CAPACITY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_POOL_CAPACITY(String JCO_POOL_CAPACITY) &#123;</span><br><span class="line">        this.JCO_POOL_CAPACITY = JCO_POOL_CAPACITY;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_PEAK_LIMIT() &#123;</span><br><span class="line">        return JCO_PEAK_LIMIT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_PEAK_LIMIT(String JCO_PEAK_LIMIT) &#123;</span><br><span class="line">        this.JCO_PEAK_LIMIT = JCO_PEAK_LIMIT;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getJCO_SAPROUTER() &#123;</span><br><span class="line">        return JCO_SAPROUTER;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setJCO_SAPROUTER(String JCO_SAPROUTER) &#123;</span><br><span class="line">        this.JCO_SAPROUTER = JCO_SAPROUTER;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;SapConn&#123;&quot; +</span><br><span class="line">                &quot;JCO_ASHOST=&apos;&quot; + JCO_ASHOST + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_SYSNR=&apos;&quot; + JCO_SYSNR + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_CLIENT=&apos;&quot; + JCO_CLIENT + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_USER=&apos;&quot; + JCO_USER + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_PASSWD=&apos;&quot; + JCO_PASSWD + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_LANG=&apos;&quot; + JCO_LANG + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_POOL_CAPACITY=&apos;&quot; + JCO_POOL_CAPACITY + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_PEAK_LIMIT=&apos;&quot; + JCO_PEAK_LIMIT + &apos;\&apos;&apos; +</span><br><span class="line">                &quot;, JCO_SAPROUTER=&apos;&quot; + JCO_SAPROUTER + &apos;\&apos;&apos; +</span><br><span class="line">                &apos;&#125;&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>然后编写用来建立sap连接的SapConn作为连接类
+</code></pre><p>编写连接类SAPConnUtils 下面是源码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by gang.xu01@hand-china.com on 2018/12/4</span><br><span class="line"> */</span><br><span class="line">public class SAPConnUtils &#123;</span><br><span class="line"></span><br><span class="line">    private static final String ABAP_AS_POOLED = &quot;ABAP_AS_WITH_POOL&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建SAP接口属性文件。</span><br><span class="line">     * @param name	ABAP管道名称</span><br><span class="line">     * @param suffix	属性文件后缀</span><br><span class="line">     * @param properties	属性文件内容</span><br><span class="line">     */</span><br><span class="line">    private static void createDataFile(String name, String suffix, Properties properties)&#123;</span><br><span class="line">        File cfg = new File(name+&quot;.&quot;+suffix);</span><br><span class="line">        if(cfg.exists())&#123;</span><br><span class="line">            cfg.deleteOnExit();</span><br><span class="line">        &#125;</span><br><span class="line">        try&#123;</span><br><span class="line">            FileOutputStream fos = new FileOutputStream(cfg, false);</span><br><span class="line">            properties.store(fos, &quot;for tests only !&quot;);</span><br><span class="line">            fos.close();</span><br><span class="line">        &#125;catch (Exception e)&#123;</span><br><span class="line">            System.out.println(&quot;Create Data file fault, error msg: &quot; + e.toString());</span><br><span class="line">            throw new RuntimeException(&quot;Unable to create the destination file &quot; + cfg.getName(), e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 初始化SAP连接</span><br><span class="line">     */</span><br><span class="line">    private static void initProperties(SapConn sapConn) &#123;</span><br><span class="line">        Properties connectProperties = new Properties();</span><br><span class="line">        // SAP服务器</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_ASHOST, sapConn.getJCO_ASHOST());</span><br><span class="line">        // SAP系统编号</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_SYSNR,  sapConn.getJCO_SYSNR());</span><br><span class="line">        // SAP集团</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_CLIENT, sapConn.getJCO_CLIENT());</span><br><span class="line">        // SAP用户名</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_USER,   sapConn.getJCO_USER());</span><br><span class="line">        // SAP密码</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_PASSWD, sapConn.getJCO_PASSWD());</span><br><span class="line">        // SAP登录语言</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_LANG,   sapConn.getJCO_LANG());</span><br><span class="line">        // 最大连接数</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_POOL_CAPACITY, sapConn.getJCO_POOL_CAPACITY());</span><br><span class="line">        // 最大连接线程</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_PEAK_LIMIT, sapConn.getJCO_PEAK_LIMIT());</span><br><span class="line">        // SAP ROUTER</span><br><span class="line">        connectProperties.setProperty(DestinationDataProvider.JCO_SAPROUTER, sapConn.getJCO_SAPROUTER());</span><br><span class="line"></span><br><span class="line">        createDataFile(ABAP_AS_POOLED, &quot;jcoDestination&quot;, connectProperties);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 获取SAP连接</span><br><span class="line">     * @return	SAP连接对象</span><br><span class="line">     */</span><br><span class="line">    public static JCoDestination connect(SapConn sapConn)&#123;</span><br><span class="line">        System.out.println(&quot;正在连接至SAP...&quot;);</span><br><span class="line">        JCoDestination destination = null;</span><br><span class="line">        initProperties(sapConn);</span><br><span class="line">        try &#123;</span><br><span class="line">            destination = JCoDestinationManager.getDestination(ABAP_AS_POOLED);</span><br><span class="line">            destination.ping();</span><br><span class="line">            System.out.println(&quot;已成功建立sap的连接&quot;);</span><br><span class="line">        &#125; catch (JCoException e) &#123;</span><br><span class="line">            System.out.println(&quot;Connect SAP fault, error msg: &quot; + e.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        return destination;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来编写一个简单的测试类test</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Created by gang.xu01@hand-china.com on 2018/12/9</span><br><span class="line"> */</span><br><span class="line">public class testCon &#123;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">        SapConn con = new SapConn(</span><br><span class="line">                &quot;127.0.0.1&quot;,</span><br><span class="line">                &quot;123&quot;,</span><br><span class="line">                &quot;456&quot;,</span><br><span class="line">                &quot;abc&quot;,</span><br><span class="line">                &quot;abc&quot;,</span><br><span class="line">                &quot;abc&quot;,</span><br><span class="line">                &quot;123&quot;,</span><br><span class="line">                &quot;321&quot;,</span><br><span class="line">                &quot;123456&quot;</span><br><span class="line">        );</span><br><span class="line"></span><br><span class="line">        // 测试连接</span><br><span class="line">        SAPConnUtils.connect(con);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果出现如下结果表明连接失败，请检查连接类。</p>
+<p>此时如果调用结果如下则表明建立连接成功。</p>
+<h2 id="四、常见报错"><a href="#四、常见报错" class="headerlink" title="四、常见报错"></a>四、常见报错</h2><ol>
+<li>缺少build path<br>这个错误是因为缺少了上述提到的文件，请按照文中提到的顺序将其加入项目中即可。</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+        
+<div class="my_post_copyright">
+  <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+  
+  <!-- JS库 sweetalert 可修改路径 -->
+  <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <p><span>本文标题:</span><a href="/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/">(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)</a></p>
+  <p><span>文章作者:</span><a href="/" title="访问 Hikari 的个人博客">Hikari</a></p>
+  <p><span>发布时间:</span>2018年12月12日 - 17:12</p>
+  <p><span>最后更新:</span>2018年12月12日 - 22:12</p>
+  <p><span>原始链接:</span><a href="/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/" title="(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)">https://cmemory180819.github.io/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/</a>
+    <span class="copy-path" title="点击复制文章链接"><i class="fa fa-clipboard" data-clipboard-text="https://cmemory180819.github.io/CMemorY180819/2018/12/12/Java连接SAP/01Java连接SAP/" aria-label="复制成功！"></i></span>
+  </p>
+  <p><span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">署名-非商业性使用-禁止演绎 4.0 国际</a> 转载请保留原文链接及作者。</p>  
+</div>
+<script> 
+    var clipboard = new Clipboard('.fa-clipboard');
+    $(".fa-clipboard").click(function(){
+      clipboard.on('success', function(){
+        swal({   
+          title: "",   
+          text: '复制成功',
+          icon: "success", 
+          showConfirmButton: true
+          });
+    });
+    });  
+</script>
+
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/CMemorY180819/tags/Java连接SAP/" rel="tag"># Java连接SAP</a>
+          
+            <a href="/CMemorY180819/tags/SAP/" rel="tag"># SAP</a>
+          
+            <a href="/CMemorY180819/tags/JAVA/" rel="tag"># JAVA</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/CMemorY180819/2018/12/12/Java连接SAP/02Java连接SAP取数/" rel="prev" title="(二)通过JAVA调用SAP接口 (增加一二级参数)">
+                (二)通过JAVA调用SAP接口 (增加一二级参数) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/CMemorY180819/uploads/image/avatar/ot.jpeg" alt="Hikari">
+            
+              <p class="site-author-name" itemprop="name">Hikari</p>
+              <p class="site-description motion-element" itemprop="description">不要随便百度就觉得自己很懂</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/CMemorY180819/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/CMemorY180819/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/CMemorY180819/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.cnblogs.com/hikarisama" target="_blank" title="博客园">
+                      
+                        <i class="fa fa-fw fa-book"></i>博客园</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/CMemorY180819" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="cmemory@aliyun.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一-通过JAVA连接SAP-sapjco3-jar在Windows和MacOS上的配置"><span class="nav-number">1.</span> <span class="nav-text">(一)通过JAVA连接SAP (sapjco3.jar在Windows和MacOS上的配置)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、sapjoc3-jar获取"><span class="nav-number">1.1.</span> <span class="nav-text">一、sapjoc3.jar获取</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、测试项目环境准备"><span class="nav-number">1.2.</span> <span class="nav-text">二、测试项目环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、源码编写及测试"><span class="nav-number">1.3.</span> <span class="nav-text">三、源码编写及测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、常见报错"><span class="nav-number">1.4.</span> <span class="nav-text">四、常见报错</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-snowflake-o"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hikari</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">2.4k</span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/CMemorY180819/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/CMemorY180819/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/CMemorY180819/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/CMemorY180819/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/CMemorY180819/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/CMemorY180819/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/CMemorY180819/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("j14FQQhlKMs0ydE4HtsMkjJ4-gzGzoHsz", "am0scG2K4ARymJ8OifaXIOYF");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
